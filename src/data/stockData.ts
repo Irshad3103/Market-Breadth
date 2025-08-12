@@ -57,10 +57,11 @@ export const calculateMarketBreadth = (stocks: StockData[]) => {
 
   // === Allocation logic ===
   let equityAllocation = 0;
-  if (formatPercent(above21EMA) > 50) equityAllocation += 25;
-  if (formatPercent(above50EMA) > 50) equityAllocation += 25;
-  if (formatPercent(above100EMA) > 50) equityAllocation += 25;
-  if (formatPercent(above200EMA) > 50) equityAllocation += 25;
+  if (formatPercent(above10EMA) > 50) equityAllocation += 20;
+  if (formatPercent(above21EMA) > 50) equityAllocation += 20;
+  if (formatPercent(above50EMA) > 50) equityAllocation += 20;
+  if (formatPercent(above100EMA) > 50) equityAllocation += 20;
+  if (formatPercent(above200EMA) > 50) equityAllocation += 20;
 
   const allocation = {
     equity: equityAllocation,
@@ -68,25 +69,22 @@ export const calculateMarketBreadth = (stocks: StockData[]) => {
   };
 
   // === Market health mapping ===
-  let marketHealth:
-    | 'bearish'
-    | 'weak'
-    | 'neutral'
-    | 'strong'
-    | 'bullish' = 'neutral';
-
+  let marketHealth: 'bearish' | 'weak' | 'neutral' | 'strong' | 'very strong' | 'bullish' = 'neutral';
   switch (equityAllocation) {
     case 0:
       marketHealth = 'bearish';
       break;
-    case 25:
+    case 20:
       marketHealth = 'weak';
       break;
-    case 50:
+    case 40:
       marketHealth = 'neutral';
       break;
-    case 75:
+    case 60:
       marketHealth = 'strong';
+      break;
+    case 80:
+      marketHealth = 'very strong';
       break;
     case 100:
       marketHealth = 'bullish';
