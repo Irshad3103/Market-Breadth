@@ -48,7 +48,7 @@ export const MarketHealthIndicator: React.FC<MarketHealthIndicatorProps> = ({ ma
         {marketBreadth.marketHealth.toUpperCase()}
       </div>
       <div className="text-sm opacity-75 mb-4">
-        Allocation: Equity - {marketBreadth?.allocation.equity}% Cash - {marketBreadth?.allocation.cash}%
+        Allocation: Equity - {marketBreadth?.allocation.equity}%, Cash - {marketBreadth?.allocation.cash}%
       </div>
       <div className="text-sm opacity-75 mb-4">
         Average: {averagePercentage.toFixed(1)}% above EMAs
