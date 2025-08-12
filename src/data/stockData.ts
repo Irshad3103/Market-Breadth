@@ -44,14 +44,8 @@ export const generateMockStockData = async (): StockData[] => {
 };
 
 
-export const calculateMarketBreadth = (stocks: StockData[]) => {
-  const total = stocks.length;
 
-  const above10EMA = stocks.filter(s => Number(s.price) > Number(s.ema10)).length;
-  const above21EMA = stocks.filter(s => Number(s.price) > Number(s.ema21)).length;
-  const above50EMA = stocks.filter(s => Number(s.price) > Number(s.ema50)).length;
-  const above100EMA = stocks.filter(s => Number(s.price) > Number(s.ema100)).length;
-  const above200EMA = stocks.filter(s => Number(s.price) > Number(s.ema200)).length;
+export const calculateMarketBreadth = (stocks: StockData[]) => {
   //  const total = 1000;
 
   // const above10EMA = 800;
@@ -59,13 +53,27 @@ export const calculateMarketBreadth = (stocks: StockData[]) => {
   // const above50EMA = 600;
   // const above100EMA = 900;
   // const above200EMA = 950;
+  const total = stocks.length;
+
+  const above10EMA = stocks.filter(s => Number(s.price) > Number(s.ema10)).length;
+  const above21EMA = stocks.filter(s => Number(s.price) > Number(s.ema21)).length;
+  const above50EMA = stocks.filter(s => Number(s.price) > Number(s.ema50)).length;
+  const above100EMA = stocks.filter(s => Number(s.price) > Number(s.ema100)).length;
+  const above200EMA = stocks.filter(s => Number(s.price) > Number(s.ema200)).length;
 
   const averagePercentage =
     ((above10EMA + above21EMA + above50EMA + above100EMA + above200EMA) / (5 * total)) * 100;
 
   let marketHealth: 'bearish' | 'neutral' | 'bullish' = 'neutral';
-  if (averagePercentage > 60) marketHealth = 'bullish';
-  else if (averagePercentage < 40) marketHealth = 'bearish';
+  let allocation = { equity: 50, cash: 50 }; // default neutral allocation
+
+  if (averagePercentage > 60) {
+    marketHealth = 'bullish';
+    allocation = { equity: 90, cash: 10 };
+  } else if (averagePercentage < 40) {
+    marketHealth = 'bearish';
+    allocation = { equity: 20, cash: 80 };
+  }
 
   const formatPercent = (count: number) =>
     Math.round((count / total) * 100 * 100) / 100;
@@ -78,6 +86,7 @@ export const calculateMarketBreadth = (stocks: StockData[]) => {
     above200EMA: formatPercent(above200EMA),
     totalStocks: total,
     marketHealth,
+    allocation,
     lastUpdated: new Date(),
   };
 };

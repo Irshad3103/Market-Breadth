@@ -30,10 +30,10 @@ export const MarketHealthIndicator: React.FC<MarketHealthIndicatorProps> = ({ ma
   };
 
   const averagePercentage = (
-    marketBreadth.above10EMA + 
-    marketBreadth.above21EMA + 
-    marketBreadth.above50EMA + 
-    marketBreadth.above100EMA + 
+    marketBreadth.above10EMA +
+    marketBreadth.above21EMA +
+    marketBreadth.above50EMA +
+    marketBreadth.above100EMA +
     marketBreadth.above200EMA
   ) / 5;
 
@@ -43,15 +43,17 @@ export const MarketHealthIndicator: React.FC<MarketHealthIndicatorProps> = ({ ma
         <h2 className="text-xl font-semibold">Market Health</h2>
         {getHealthIcon()}
       </div>
-      
+
       <div className="text-3xl font-bold mb-2">
         {marketBreadth.marketHealth.toUpperCase()}
       </div>
-      
+      <div className="text-sm opacity-75 mb-4">
+        Allocation: {marketBreadth?.allocation}%
+      </div>
       <div className="text-sm opacity-75 mb-4">
         Average: {averagePercentage.toFixed(1)}% above EMAs
       </div>
-      
+
       <div className="text-xs opacity-60">
         Last updated: {marketBreadth.lastUpdated.toLocaleTimeString()}
       </div>

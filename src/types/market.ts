@@ -17,6 +17,7 @@ export interface MarketBreadth {
   above200EMA: number;
   totalStocks: number;
   marketHealth: 'bearish' | 'neutral' | 'bullish';
+  allocation : number;
   lastUpdated: Date;
 }
 
