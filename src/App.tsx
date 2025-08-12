@@ -82,7 +82,7 @@ function App() {
 
             <div className="flex items-center space-x-4">
               {/* Navigation Tabs */}
-              <div className="flex space-x-2">
+              {/* <div className="flex space-x-2">
                 <button
                   onClick={() => setActiveTab('dashboard')}
                   className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
@@ -118,7 +118,7 @@ function App() {
                   <Database className="w-4 h-4" />
                   <span>Historical</span>
                 </button>
-              </div>
+              </div> */}
 
               <button
                 onClick={updateData}
