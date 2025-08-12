@@ -226,7 +226,7 @@ function App() {
             </div>
 
             {/* Stock Table */}
-            <StockTable stocks={stocks} />
+            {/* <StockTable stocks={stocks} /> */}
           </>
         )}
 
