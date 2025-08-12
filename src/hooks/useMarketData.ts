@@ -26,9 +26,9 @@ export const useMarketData = () => {
     updateData();
     
     // Update data every 30 seconds
-    const interval = setInterval(updateData, 30000);
+    // const interval = setInterval(updateData, 30000);
     
-    return () => clearInterval(interval);
+    // return () => clearInterval(interval);
   }, []);
 
   return { stocks, marketBreadth, isLoading, updateData };
