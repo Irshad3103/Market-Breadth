@@ -75,7 +75,7 @@ function App() {
                 <BarChart3 className="w-8 h-8 text-white/90" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-white/90">Market Breadth Analyzer</h1>
+                <h1 className="text-2xl font-bold text-white/90">Market Breadth Analyzer opopp</h1>
                 <p className="text-white/60">Real-time EMA analysis dashboard</p>
               </div>
             </div>
