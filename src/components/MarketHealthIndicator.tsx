@@ -10,7 +10,14 @@ export const MarketHealthIndicator: React.FC<MarketHealthIndicatorProps> = ({ ma
   const getHealthIcon = () => {
     switch (marketBreadth.marketHealth) {
       case 'bullish':
+      case 'very strong':
         return <TrendingUp className="w-6 h-6 text-green-400" />;
+      case 'strong':
+        return <TrendingUp className="w-6 h-6 text-green-300" />;
+      case 'neutral':
+        return <Minus className="w-6 h-6 text-yellow-400" />;
+      case 'weak':
+        return <TrendingDown className="w-6 h-6 text-orange-400" />;
       case 'bearish':
         return <TrendingDown className="w-6 h-6 text-red-400" />;
       default:
@@ -22,6 +29,14 @@ export const MarketHealthIndicator: React.FC<MarketHealthIndicatorProps> = ({ ma
     switch (marketBreadth.marketHealth) {
       case 'bullish':
         return 'text-green-400 border-green-400/30 bg-green-400/10';
+      case 'very strong':
+        return 'text-green-300 border-green-300/30 bg-green-300/10';
+      case 'strong':
+        return 'text-emerald-400 border-emerald-400/30 bg-emerald-400/10';
+      case 'neutral':
+        return 'text-yellow-400 border-yellow-400/30 bg-yellow-400/10';
+      case 'weak':
+        return 'text-orange-400 border-orange-400/30 bg-orange-400/10';
       case 'bearish':
         return 'text-red-400 border-red-400/30 bg-red-400/10';
       default:

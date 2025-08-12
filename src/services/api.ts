@@ -52,9 +52,14 @@ class ApiService {
       
       const healthScore = (above10EMA + above21EMA + above50EMA + above100EMA + above150EMA + above200EMA) / 6;
       
-      let marketHealth: 'bearish' | 'neutral' | 'bullish' = 'neutral';
-      if (healthScore > 60) marketHealth = 'bullish';
-      else if (healthScore < 40) marketHealth = 'bearish';
+       
+      let marketHealth: 'bearish' | 'weak' | 'neutral' | 'strong' | 'very strong' | 'bullish' = 'neutral';
+      if (healthScore >= 80) marketHealth = 'bullish';
+      else if (healthScore >= 70) marketHealth = 'very strong';
+      else if (healthScore >= 60) marketHealth = 'strong';
+      else if (healthScore >= 40) marketHealth = 'neutral';
+      else if (healthScore >= 30) marketHealth = 'weak';
+      else marketHealth = 'bearish';
       
       data.push({
         date: date.toISOString().split('T')[0],

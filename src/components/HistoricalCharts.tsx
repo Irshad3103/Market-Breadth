@@ -64,10 +64,22 @@ export const HistoricalCharts: React.FC<HistoricalChartsProps> = ({
     return latest.healthScore || 0;
   };
 
-  const getHealthColor = (score: number) => {
-    if (score >= 70) return 'text-green-400';
-    if (score >= 50) return 'text-yellow-400';
+ const getHealthColor = (score: number) => {
+    if (score >= 80) return 'text-green-400';
+    if (score >= 70) return 'text-green-300';
+    if (score >= 60) return 'text-emerald-400';
+    if (score >= 40) return 'text-yellow-400';
+    if (score >= 30) return 'text-orange-400';
     return 'text-red-400';
+  };
+
+  const getHealthLabel = (score: number) => {
+    if (score >= 80) return 'Bullish';
+    if (score >= 70) return 'Very Strong';
+    if (score >= 60) return 'Strong';
+    if (score >= 40) return 'Neutral';
+    if (score >= 30) return 'Weak';
+    return 'Bearish';
   };
 
   return (
@@ -109,10 +121,12 @@ export const HistoricalCharts: React.FC<HistoricalChartsProps> = ({
               <TrendingUp className="w-5 h-5 text-blue-400" />
               <span className="text-sm font-medium text-white/90">Health Score</span>
             </div>
-            <div className={`text-2xl font-bold ${getHealthColor(calculateHealthScore())}`}>
-              {calculateHealthScore().toFixed(1)}
+           <div className={`text-2xl font-bold ${getHealthColor(calculateHealthScore())}`}>
+              {getHealthLabel(calculateHealthScore())}
             </div>
-            <div className="text-xs text-white/60">Overall market strength</div>
+            <div className="text-xs text-white/60">
+              Score: {calculateHealthScore().toFixed(1)} - Overall market strength
+            </div>
           </div>
           
           <div className="bg-white/5 rounded-lg p-4 border border-white/10">

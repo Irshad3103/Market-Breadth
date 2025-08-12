@@ -52,6 +52,18 @@ export const calculateMarketBreadth = (stocks: StockData[]) => {
   const above100EMA = stocks.filter(s => Number(s.price) > Number(s.ema100)).length;
   const above200EMA = stocks.filter(s => Number(s.price) > Number(s.ema200)).length;
 
+// const total = 1000;
+
+//   const above10EMA =200 ;
+//   const above21EMA = 600;
+//   const above50EMA = 700;
+//   const above100EMA = 400;
+//   const above200EMA = 300;
+
+
+
+
+
   const formatPercent = (count: number) =>
     Math.round((count / total) * 100 * 100) / 100;
 
