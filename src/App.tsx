@@ -148,7 +148,7 @@ function App() {
         {activeTab === 'dashboard' && marketBreadth && (
           <>
             {/* Top Stats Row */}
-            <div className="grid grid-cols-1 lg:grid-cols-6 gap-6">
+            {/* <div className="grid grid-cols-1 lg:grid-cols-6 gap-6">
               <div className='col-span-2'>
                 <MarketHealthIndicator marketBreadth={marketBreadth} />
               </div>
@@ -167,20 +167,69 @@ function App() {
                       <span className="font-medium text-white/90">Basket Gained {portfolio.totalAvgChangeInPrice}% of Momentum Today</span>
                     </div>
                     <p className="text-sm text-white/70">
-                      {/* {marketBreadth.above10EMA >= 70 ? 'Strong bullish momentum with most stocks above 10 EMA' :
-                        marketBreadth.above10EMA >= 50 ? 'Moderate momentum, mixed signals' :
-                          'Weak momentum, potential bearish pressure'} */}
-                      For Example - Investing ₹10,00,000 in my basket of stocks would have resulted in a profit of ₹{formatCurrency((portfolio.totalAvgChangeInPrice*1000000)/100)}.
+
+                      For Example - Investing ₹10,00,000 in my basket of stocks would have resulted in a profit of ₹{formatCurrency((portfolio.totalAvgChangeInPrice * 1000000) / 100)}.
                     </p>
                     <div className="mt-2 text-xs text-white/50">
-                      {/* {marketBreadth.above10EMA}% above 10 EMA */}
+                      Invested
                     </div>
                   </div>
 
 
                 </div>
               </div>
+            </div> */}
+
+
+
+
+            <div className="max-w-7xl mx-auto space-y-6">
+              {/* All components in one responsive container */}
+              <div className="flex flex-col xl:flex-row gap-6 items-stretch">
+                {/* Market Health Indicator - 37.5% width on xl screens (75% of 50%), full width on small */}
+                <div className="w-full xl:w-[37.5%]">
+                  <MarketHealthIndicator marketBreadth={marketBreadth} />
+                </div>
+
+                {/* Today's Gains - 12.5% width on xl screens (25% of 50%), full width on small */}
+                <div className="w-full xl:w-[12.5%]">
+                  {portfolio && <TodayGainsCard todayGains={portfolio.totalAvgChangeInPrice} />}
+                </div>
+
+                {/* Momentum Basket Insights - 50% width on xl screens, full width on small */}
+                <div className="w-full xl:w-1/2">
+                  <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 h-full flex flex-col">
+                    <h2 className="text-xl font-semibold text-white/90 mb-4">
+                      Momentum Basket Insights
+                    </h2>
+
+                    <div className="space-y-4 flex-1">
+                      <div className="p-4 bg-white/5 rounded-lg border border-white/10 h-full">
+                        <div className="flex items-center space-x-2 mb-2">
+                          <TrendingUp className="w-5 h-5 text-blue-400" />
+                          <span className="font-medium text-white/90">
+                            Basket Gained {portfolio.totalAvgChangeInPrice}% of Momentum Today
+                          </span>
+                        </div>
+                        <p className="text-sm text-white/70">
+                          For example — investing ₹10,00,000 in my basket of stocks would have
+                          resulted in a profit of
+                          {formatCurrency((portfolio.totalAvgChangeInPrice * 1000000) / 100)}.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+
+
+
+
+
+
+
+
 
 
             {/* EMA Cards Row */}
