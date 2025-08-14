@@ -42,6 +42,28 @@ export const generateMockStockData = async (): StockData[] => {
     };
   });
 };
+export const getPortfolioData = async () => {
+  const stockSymbols: any[] = await getPortfolio();
+
+  const portfolioData = stockSymbols.map(stock => ({
+    symbol: stock.NSE,
+    allocation: stock.Allocation,
+    price: stock.Price,
+    change_in_price: (stock.Change_in_Price * 100).toFixed(2),
+    name: stock.Stock_Name
+  }));
+
+  // Calculate total change in price
+  const totalChangeInPrice = portfolioData.reduce(
+    (sum, stock) => sum + (Number(stock.change_in_price) || 0),
+    0
+  );
+
+  return {
+    portfolioData,
+    totalAvgChangeInPrice: ((totalChangeInPrice / portfolioData.length)).toFixed(2)
+  };
+};
 
 export const calculateMarketBreadth = (stocks: StockData[]) => {
   const total = stocks.length;
@@ -52,13 +74,13 @@ export const calculateMarketBreadth = (stocks: StockData[]) => {
   const above100EMA = stocks.filter(s => Number(s.price) > Number(s.ema100)).length;
   const above200EMA = stocks.filter(s => Number(s.price) > Number(s.ema200)).length;
 
-// const total = 1000;
+  // const total = 1000;
 
-//   const above10EMA =200 ;
-//   const above21EMA = 600;
-//   const above50EMA = 700;
-//   const above100EMA = 400;
-//   const above200EMA = 300;
+  //   const above10EMA =200 ;
+  //   const above21EMA = 600;
+  //   const above50EMA = 700;
+  //   const above100EMA = 400;
+  //   const above200EMA = 300;
 
 
 
@@ -147,7 +169,29 @@ const getStocksList = async () => {
     return [];
   }
 };
+const getPortfolio = async () => {
+  const CSV_URL =
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vRh9ncavACjUZEyy2vF1OaExQwfUpcqbsx_OXQHCVPFLvY6IEeJBn-_4cWopsmt8LKN7NzcDzirCPCM/pub?gid=1137828682&single=true&output=csv"
+  try {
+    const res = await fetch(CSV_URL);
+    if (!res.ok) throw new Error(`HTTP ${res.status} - ${res.statusText}`);
+    const csvText = await res.text();
 
+    const parsed = Papa.parse(csvText, {
+      header: true,
+      skipEmptyLines: true,
+    });
+
+    if (parsed.errors.length) {
+      console.warn("CSV parse errors:", parsed.errors);
+    }
+
+    return parsed.data; // returns an array of stock objects
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
+};
 
 // export const calculateMarketBreadth = (stocks: StockData[]) => {
 //   //  const total = 1000;

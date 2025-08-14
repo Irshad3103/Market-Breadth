@@ -21,8 +21,8 @@ export const StockTable: React.FC<StockTableProps> = ({ stocks }) => {
   return (
     <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden">
       <div className="p-6 border-b border-white/10">
-        <h2 className="text-xl font-semibold text-white/90">Stock Analysis</h2>
-        <p className="text-sm text-white/60 mt-1">Price vs EMA comparison for sample stocks</p>
+        <h2 className="text-xl font-semibold text-white/90">Momentum Basket</h2>
+        <p className="text-sm text-white/60 mt-1">A focused portfolio of high-performing stocks with strong upward price trends, designed to capture short- to medium-term gains.</p>
       </div>
 
       <div className="overflow-x-auto">
@@ -31,15 +31,19 @@ export const StockTable: React.FC<StockTableProps> = ({ stocks }) => {
             <tr className="border-b border-white/10">
               <th className="text-left p-4 text-white/90 font-semibold">Symbol</th>
               <th className="text-left p-4 text-white/90 font-semibold">Price</th>
+              {/* <th className="text-left p-4 text-white/90 font-semibold">Allocation</th> */}
+              <th className="text-left p-4 text-white/90 font-semibold">Change In Price</th>
+
+              {/* 
               <th className="text-center p-4 text-white/90 font-semibold">10 EMA</th>
               <th className="text-center p-4 text-white/90 font-semibold">21 EMA</th>
               <th className="text-center p-4 text-white/90 font-semibold">50 EMA</th>
               <th className="text-center p-4 text-white/90 font-semibold">100 EMA</th>
-              <th className="text-center p-4 text-white/90 font-semibold">200 EMA</th>
+              <th className="text-center p-4 text-white/90 font-semibold">200 EMA</th> */}
             </tr>
           </thead>
           <tbody>
-            {stocks?.slice(0, 10).map((stock, index) => (
+            {stocks?.portfolioData?.slice(0, -2).map((stock, index) => (
               <tr
                 key={stock.symbol}
                 className={`border-b border-white/5 hover:bg-white/5 transition-colors ${index % 2 === 0 ? 'bg-white/2' : ''
@@ -51,16 +55,33 @@ export const StockTable: React.FC<StockTableProps> = ({ stocks }) => {
                     <div className="text-xs text-white/60 truncate max-w-[120px]">{stock.name}</div>
                   </div>
                 </td>
-                <td className="p-4 text-white/90 font-medium">${stock.price}</td>
+                <td className="p-4 text-white/90 font-medium">{stock.price}</td>
+                {/* <td className="p-4 text-white/90 font-medium">{stock.allocation}%</td> */}
+                <td className="p-4 text-white/90 font-medium">{stock.change_in_price}%</td>
+
+                {/* 
                 <td className="p-4 text-center">{getEMAStatus(stock.price, stock.ema10)}</td>
                 <td className="p-4 text-center">{getEMAStatus(stock.price, stock.ema21)}</td>
                 <td className="p-4 text-center">{getEMAStatus(stock.price, stock.ema50)}</td>
                 <td className="p-4 text-center">{getEMAStatus(stock.price, stock.ema100)}</td>
-                <td className="p-4 text-center">{getEMAStatus(stock.price, stock.ema200)}</td>
+                <td className="p-4 text-center">{getEMAStatus(stock.price, stock.ema200)}</td> */}
               </tr>
             ))}
+            <tr>
+
+
+              <td className="p-4 text-white/90 font-medium"></td>
+
+              <td className="p-4 text-white/90 font-medium">Avg Basket Change in price</td>
+
+              <td className="p-4 text-white/90 font-medium">{stocks?.totalAvgChangeInPrice}%</td>
+
+              {/* <td className="p-4 text-white/90 font-medium"></td> */}
+
+            </tr>
           </tbody>
         </table>
+
       </div>
     </div>
   );

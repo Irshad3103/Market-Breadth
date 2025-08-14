@@ -11,9 +11,10 @@ import { HistoricalCharts } from './components/HistoricalCharts';
 import { EMAData } from './types/market';
 import { DailyBreadthData } from './types/market';
 import { apiService } from './services/api';
+import { formatCurrency, TodayGainsCard } from './components/TodayGainsCard';
 
 function App() {
-  const { stocks, marketBreadth, isLoading, updateData } = useMarketData();
+  const { stocks, portfolio, marketBreadth, isLoading, updateData } = useMarketData();
   const { historicalData, timeRange, isLoading: isHistoricalLoading, updateTimeRange } = useHistoricalData();
   const [activeTab, setActiveTab] = React.useState<'dashboard' | 'input' | 'historical'>('dashboard');
   const [isSubmitting, setIsSubmitting] = React.useState(false);
@@ -34,7 +35,7 @@ function App() {
 
   const getBackgroundClass = () => {
     if (!marketBreadth) return 'bg-gradient-to-br from-slate-900 to-slate-800';
-    
+
     switch (marketBreadth.marketHealth) {
       case 'bullish':
         return 'bg-gradient-to-br from-green-900 via-slate-900 to-emerald-900';
@@ -147,19 +148,40 @@ function App() {
         {activeTab === 'dashboard' && marketBreadth && (
           <>
             {/* Top Stats Row */}
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-              <div className="lg:col-span-1">
+            <div className="grid grid-cols-1 lg:grid-cols-6 gap-6">
+              <div className='col-span-2'>
                 <MarketHealthIndicator marketBreadth={marketBreadth} />
               </div>
 
-              {/* <div className="lg:col-span-3">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {emaDataArray.slice(0, 3).map((emaData) => (
-                    <EMACard key={emaData.period} emaData={emaData} />
-                  ))}
+              <div className="flex items-stretch">
+                {portfolio && <TodayGainsCard todayGains={portfolio.totalAvgChangeInPrice} />}
+              </div>
+
+              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 col-span-3">
+                <h2 className="text-xl font-semibold text-white/90 mb-4">Momentum Basket Insights</h2>
+
+                <div className="space-y-4">
+                  <div className="p-4 bg-white/5 rounded-lg border border-white/10">
+                    <div className="flex items-center space-x-2 mb-2">
+                      <TrendingUp className="w-5 h-5 text-blue-400" />
+                      <span className="font-medium text-white/90">Basket Gained {portfolio.totalAvgChangeInPrice}% of Momentum Today</span>
+                    </div>
+                    <p className="text-sm text-white/70">
+                      {/* {marketBreadth.above10EMA >= 70 ? 'Strong bullish momentum with most stocks above 10 EMA' :
+                        marketBreadth.above10EMA >= 50 ? 'Moderate momentum, mixed signals' :
+                          'Weak momentum, potential bearish pressure'} */}
+                      For Example - Investing ₹10,00,000 in my basket of stocks would have resulted in a profit of ₹{formatCurrency((portfolio.totalAvgChangeInPrice*1000000)/100)}.
+                    </p>
+                    <div className="mt-2 text-xs text-white/50">
+                      {/* {marketBreadth.above10EMA}% above 10 EMA */}
+                    </div>
+                  </div>
+
+
                 </div>
-              </div> */}
+              </div>
             </div>
+
 
             {/* EMA Cards Row */}
             {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
@@ -183,8 +205,8 @@ function App() {
                     </div>
                     <p className="text-sm text-white/70">
                       {marketBreadth.above10EMA >= 70 ? 'Strong bullish momentum with most stocks above 10 EMA' :
-                       marketBreadth.above10EMA >= 50 ? 'Moderate momentum, mixed signals' :
-                       'Weak momentum, potential bearish pressure'}
+                        marketBreadth.above10EMA >= 50 ? 'Moderate momentum, mixed signals' :
+                          'Weak momentum, potential bearish pressure'}
                     </p>
                     <div className="mt-2 text-xs text-white/50">
                       {marketBreadth.above10EMA}% above 10 EMA
@@ -198,8 +220,8 @@ function App() {
                     </div>
                     <p className="text-sm text-white/70">
                       {marketBreadth.above200EMA >= 60 ? 'Strong long-term uptrend established' :
-                       marketBreadth.above200EMA >= 40 ? 'Mixed long-term signals' :
-                       'Long-term trend showing weakness'}
+                        marketBreadth.above200EMA >= 40 ? 'Mixed long-term signals' :
+                          'Long-term trend showing weakness'}
                     </p>
                     <div className="mt-2 text-xs text-white/50">
                       {marketBreadth.above200EMA}% above 200 EMA
@@ -212,13 +234,13 @@ function App() {
                       <span className="font-medium text-white/90">Overall Assessment</span>
                     </div>
                     <p className="text-sm text-white/70">
-                      Market breadth indicates {marketBreadth.marketHealth.replace('very strong', 'very strong')} conditions. 
+                      Market breadth indicates {marketBreadth.marketHealth.replace('very strong', 'very strong')} conditions.
                       {marketBreadth.marketHealth === 'bullish' ? ' Excellent conditions for long positions.' :
-                       marketBreadth.marketHealth === 'very strong' ? ' Very favorable market conditions.' :
-                       marketBreadth.marketHealth === 'strong' ? ' Good market strength, consider long positions.' :
-                       marketBreadth.marketHealth === 'neutral' ? ' Mixed signals, monitor for directional confirmation.' :
-                       marketBreadth.marketHealth === 'weak' ? ' Showing weakness, exercise caution.' :
-                       ' Poor conditions, consider defensive strategies.'}
+                        marketBreadth.marketHealth === 'very strong' ? ' Very favorable market conditions.' :
+                          marketBreadth.marketHealth === 'strong' ? ' Good market strength, consider long positions.' :
+                            marketBreadth.marketHealth === 'neutral' ? ' Mixed signals, monitor for directional confirmation.' :
+                              marketBreadth.marketHealth === 'weak' ? ' Showing weakness, exercise caution.' :
+                                ' Poor conditions, consider defensive strategies.'}
                     </p>
                   </div>
                 </div>
@@ -226,13 +248,13 @@ function App() {
             </div>
 
             {/* Stock Table */}
-            {/* <StockTable stocks={stocks} /> */}
+            <StockTable stocks={portfolio} />
           </>
         )}
 
         {/* Input Data Tab */}
         {activeTab === 'input' && (
-          <BreadthDataForm 
+          <BreadthDataForm
             onSubmit={handleBreadthDataSubmit}
             isSubmitting={isSubmitting}
           />
@@ -247,7 +269,7 @@ function App() {
                 <p className="text-white/70">Loading historical data...</p>
               </div>
             ) : (
-              <HistoricalCharts 
+              <HistoricalCharts
                 data={historicalData}
                 timeRange={timeRange}
                 onTimeRangeChange={updateTimeRange}
