@@ -5,28 +5,30 @@ import { TodayGains } from '../types/market';
 interface TodayGainsCardProps {
     todayGains: TodayGains;
 }
- export  const formatCurrency = (value: number) => {
-        return new Intl.NumberFormat('en-IN', {
-            style: 'currency',
-            currency: 'INR',
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0,
-        }).format(value);
-    };
-export const TodayGainsCard: React.FC<TodayGainsCardProps> = ({ todayGains }) => {
-    const getGainColor = (value: number) => {
+export const formatCurrency = (value: number) => {
+    return new Intl.NumberFormat('en-IN', {
+        style: 'currency',
+        currency: 'INR',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+    }).format(value);
+};
+export const getGainIcon = (value: number) => {
+    if (value > 0) return <TrendingUp className="w-5 h-5" />;
+    if (value < 0) return <TrendingDown className="w-5 h-5" />;
+    return <DollarSign className="w-5 h-5" />;
+};
+export   const getGainColor = (value: number) => {
         if (value > 0) return 'text-green-400';
         if (value < 0) return 'text-red-400';
         return 'text-white/70';
     };
-
-    const getGainIcon = (value: number) => {
-        if (value > 0) return <TrendingUp className="w-5 h-5" />;
-        if (value < 0) return <TrendingDown className="w-5 h-5" />;
-        return <DollarSign className="w-5 h-5" />;
-    };
-
+export const TodayGainsCard: React.FC<TodayGainsCardProps> = ({ todayGains }) => {
   
+
+
+
+
 
     return (
         <div className="p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300">
@@ -47,9 +49,9 @@ export const TodayGainsCard: React.FC<TodayGainsCardProps> = ({ todayGains }) =>
                     <div className={`text-sm ${getGainColor(todayGains)}`}>
                         ({todayGains > 0 ? '+' : ''}{todayGains}%)
                     </div>
-                    
+
                 </div>
-                
+
 
                 {/* Market Indices */}
                 {/* <div className="grid grid-cols-2 gap-3">

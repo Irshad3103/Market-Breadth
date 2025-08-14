@@ -11,7 +11,7 @@ import { HistoricalCharts } from './components/HistoricalCharts';
 import { EMAData } from './types/market';
 import { DailyBreadthData } from './types/market';
 import { apiService } from './services/api';
-import { formatCurrency, TodayGainsCard } from './components/TodayGainsCard';
+import { formatCurrency, getGainColor, getGainIcon, TodayGainsCard } from './components/TodayGainsCard';
 
 function App() {
   const { stocks, portfolio, marketBreadth, isLoading, updateData } = useMarketData();
@@ -206,15 +206,18 @@ function App() {
                     <div className="space-y-4 flex-1">
                       <div className="p-4 bg-white/5 rounded-lg border border-white/10 h-full">
                         <div className="flex items-center space-x-2 mb-2">
-                          <TrendingUp className="w-5 h-5 text-blue-400" />
+                          <div className={`flex items-center space-x-1 ${getGainColor(portfolio.totalAvgChangeInPrice)}`}>
+                            {getGainIcon(portfolio.totalAvgChangeInPrice)}
+                          </div>
                           <span className="font-medium text-white/90">
-                            Basket Gained {portfolio.totalAvgChangeInPrice}% of Momentum Today
+                            Basket Gained <span className={`${getGainColor(portfolio.totalAvgChangeInPrice)}`}>
+                              {portfolio.totalAvgChangeInPrice}%</span> of Momentum Today
                           </span>
                         </div>
                         <p className="text-sm text-white/70">
                           For example — investing ₹10,00,000 in my basket of stocks would have
-                          resulted in a profit of
-                          {formatCurrency((portfolio.totalAvgChangeInPrice * 1000000) / 100)}.
+                          resulted in a {portfolio.totalAvgChangeInPrice >= 0 && <span> profit</span>}{portfolio.totalAvgChangeInPrice < 0 && <span>loss</span>} of  
+                           {formatCurrency((portfolio.totalAvgChangeInPrice * 1000000) / 100)}.
                         </p>
                       </div>
                     </div>
@@ -344,7 +347,7 @@ function App() {
           </div>
         )}
       </main>
-    </div>
+    </div >
   );
 }
 
