@@ -51,7 +51,7 @@ export const StockTable: React.FC<StockTableProps> = ({ stocks }) => {
               >
                 <td className="p-4">
                   <div>
-                    <div className="font-medium text-white/90">{stock.symbol}</div>
+                    <div className="font-medium text-white/90">{index+1}. {stock.symbol}</div>
                     <div className="text-xs text-white/60 truncate max-w-[120px]">{stock.name}</div>
                   </div>
                 </td>
