@@ -66,21 +66,21 @@ export const getPortfolioData = async () => {
 };
 
 export const calculateMarketBreadth = (stocks: StockData[]) => {
-  const total = stocks.length;
+  // const total = stocks.length;
 
-  const above10EMA = stocks.filter(s => Number(s.price) > Number(s.ema10)).length;
-  const above21EMA = stocks.filter(s => Number(s.price) > Number(s.ema21)).length;
-  const above50EMA = stocks.filter(s => Number(s.price) > Number(s.ema50)).length;
-  const above100EMA = stocks.filter(s => Number(s.price) > Number(s.ema100)).length;
-  const above200EMA = stocks.filter(s => Number(s.price) > Number(s.ema200)).length;
+  // const above10EMA = stocks.filter(s => Number(s.price) > Number(s.ema10)).length;
+  // const above21EMA = stocks.filter(s => Number(s.price) > Number(s.ema21)).length;
+  // const above50EMA = stocks.filter(s => Number(s.price) > Number(s.ema50)).length;
+  // const above100EMA = stocks.filter(s => Number(s.price) > Number(s.ema100)).length;
+  // const above200EMA = stocks.filter(s => Number(s.price) > Number(s.ema200)).length;
 
-  // const total = 1000;
+  const total = 1000;
 
-  //   const above10EMA =200 ;
-  //   const above21EMA = 600;
-  //   const above50EMA = 700;
-  //   const above100EMA = 400;
-  //   const above200EMA = 300;
+    const above10EMA =900 ;
+    const above21EMA = 600;
+    const above50EMA = 700;
+    const above100EMA = 700;
+    const above200EMA = 600;
 
 
 
