@@ -25,7 +25,7 @@ export const generateMockStockData = async (): StockData[] => {
   //   { symbol: 'KO', name: 'The Coca-Cola Company' },
   // ];
   const stockSymbols: any[] = await getStocksList();
-
+  console.log(stockSymbols, "fdsfdsf")
   return stockSymbols.map(stock => {
 
     return {
@@ -33,6 +33,7 @@ export const generateMockStockData = async (): StockData[] => {
       symbol: stock.SYMBOL,
       name: stock.NAME_OF_COMPANY,
       price: stock.Price,
+      Change_in_Price: stock.Change_in_Price,
       ema10: stock.SMA10,
       ema21: stock.SMA21,
       ema50: stock.SMA50,
@@ -73,6 +74,17 @@ export const calculateMarketBreadth = (stocks: StockData[]) => {
   const above50EMA = stocks.filter(s => Number(s.price) > Number(s.ema50)).length;
   const above100EMA = stocks.filter(s => Number(s.price) > Number(s.ema100)).length;
   const above200EMA = stocks.filter(s => Number(s.price) > Number(s.ema200)).length;
+  const advancers = stocks.filter(s => {
+    const change = parseFloat(s.Change_in_Price.replace('%', ''));
+    return change >= 0;
+  }).length;
+
+
+  const decliners = stocks.filter(s => {
+    const change = parseFloat(s.Change_in_Price.replace('%', ''));
+    return change < 0;
+  }).length;
+
 
   // const total = 1000;
 
@@ -131,6 +143,11 @@ export const calculateMarketBreadth = (stocks: StockData[]) => {
     above50EMA: formatPercent(above50EMA),
     above100EMA: formatPercent(above100EMA),
     above200EMA: formatPercent(above200EMA),
+    advancers: formatPercent(advancers),
+
+    decliners: formatPercent(decliners),
+
+
     totalStocks: total,
     allocation,
     marketHealth,

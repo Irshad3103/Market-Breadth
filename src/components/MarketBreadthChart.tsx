@@ -12,6 +12,9 @@ export const MarketBreadthChart: React.FC<MarketBreadthChartProps> = ({ marketBr
     { period: '50 EMA', percentage: marketBreadth.above50EMA },
     { period: '100 EMA', percentage: marketBreadth.above100EMA },
     { period: '200 EMA', percentage: marketBreadth.above200EMA },
+    { period: 'Advancers', percentage: marketBreadth.advancers },
+    { period: 'Decliners', percentage: marketBreadth.decliners },
+
   ];
 
   const maxPercentage = Math.max(...chartData.map(d => d.percentage));
